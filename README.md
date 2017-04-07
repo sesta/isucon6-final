@@ -113,3 +113,5 @@ azure group deployment create --template-file deploy.json -e parameters.json isu
   * パラメータ設定用ファイルの指定
 * --template-file
   * テンプレートファイルの指定
+
+test
