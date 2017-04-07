@@ -30,7 +30,7 @@ func StrokeReflectedToTop(origins []string) {
 		return
 	}
 
-	t1 := time.Now()
+	//t1 := time.Now()
 
 	room, ok := makeRoom(s1, token)
 	if !ok {
@@ -38,31 +38,31 @@ func StrokeReflectedToTop(origins []string) {
 		return
 	}
 
-	t2 := time.Now()
-	if room.CreatedAt.After(t2.Add(500*time.Millisecond)) || room.CreatedAt.Before(t1.Add(-500*time.Millisecond)) {
-		fails.Critical("作成した部屋のcreated_atが正しくありません",
-			fmt.Errorf("should be %s < %s < %s",
-				t1.Format(time.RFC3339Nano),
-				room.CreatedAt.Format(time.RFC3339Nano),
-				t2.Format(time.RFC3339Nano)))
-	}
+	//t2 := time.Now()
+	//if room.CreatedAt.After(t2.Add(500*time.Millisecond)) || room.CreatedAt.Before(t1.Add(-500*time.Millisecond)) {
+	//fails.Critical("作成した部屋のcreated_atが正しくありません",
+	//fmt.Errorf("should be %s < %s < %s",
+	//t1.Format(time.RFC3339Nano),
+	//room.CreatedAt.Format(time.RFC3339Nano),
+	//t2.Format(time.RFC3339Nano)))
+	//}
 
 	seedStrokes := seed.GetStrokes("stool")
 	seedStroke := seed.FluctuateStroke(seedStrokes[0])
-	stroke, ok := drawStroke(s1, token, room.ID, seedStroke)
+	_, ok = drawStroke(s1, token, room.ID, seedStroke)
 	if !ok {
 		fails.Critical("線の投稿に失敗しました", nil)
 		return
 	}
 
-	t3 := time.Now()
-	if stroke.CreatedAt.After(t3.Add(500*time.Millisecond)) || stroke.CreatedAt.Before(t2.Add(-500*time.Millisecond)) {
-		fails.Critical("作成した部屋のcreated_atが正しくありません",
-			fmt.Errorf("should be %s < %s < %s",
-				t2.Format(time.RFC3339Nano),
-				stroke.CreatedAt.Format(time.RFC3339Nano),
-				t3.Format(time.RFC3339Nano)))
-	}
+	//t3 := time.Now()
+	//if stroke.CreatedAt.After(t3.Add(500*time.Millisecond)) || stroke.CreatedAt.Before(t2.Add(-500*time.Millisecond)) {
+	//fails.Critical("作成した部屋のcreated_atが正しくありません",
+	//fmt.Errorf("should be %s < %s < %s",
+	//t2.Format(time.RFC3339Nano),
+	//stroke.CreatedAt.Format(time.RFC3339Nano),
+	//t3.Format(time.RFC3339Nano)))
+	//}
 
 	// 描いた直後にトップページに表示される
 	ok = action.Get(s2, "/", action.OK(func(body io.Reader, l *fails.Logger) bool {
