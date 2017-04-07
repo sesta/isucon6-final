@@ -17,3 +17,14 @@
     owner=isucon
     group=isucon
     mode=755
+- name: make the ssh directory
+  file:
+    path=/home/isucon/.ssh
+    state=directory
+- name: place the authorized keys
+  copy:
+    src=home/isucon/.ssh/authorized_keys
+    dest=/home/isucon/.ssh/authorized_keys
+    owner=isucon
+    group=isucon
+    mode=600
