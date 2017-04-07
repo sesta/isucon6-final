@@ -21,8 +21,8 @@ import (
 var BenchmarkTimeout int
 var InitialCheckOnly bool
 var MatsuriNum = 10
-var LoadIndexPageNum = 10
-var DrawOnRandomRoomNum = 2
+var LoadIndexPageNum = 200
+var DrawOnRandomRoomNum = 40
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
@@ -101,7 +101,7 @@ func benchmark(origins []string) {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			scenario.Matsuri(origins, BenchmarkTimeout-5)
+			// scenario.Matsuri(origins, BenchmarkTimeout-5)
 		}()
 	}
 
@@ -114,13 +114,7 @@ L:
 		select {
 		case <-loadIndexPageCh:
 			go func() {
-				ok := scenario.LoadIndexPage(origins)
-				if ok {
-					time.Sleep(500 * time.Millisecond)
-				} else {
-					fmt.Fprintln(os.Stderr, "LoadIndexPage failed. waiting for 1s.")
-					time.Sleep(1000 * time.Millisecond)
-				}
+				time.Sleep(1000 * time.Millisecond)
 				loadIndexPageCh <- struct{}{}
 			}()
 		case <-drawOnRandomRoomCh:
