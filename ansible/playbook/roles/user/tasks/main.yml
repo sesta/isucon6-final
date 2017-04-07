@@ -6,3 +6,14 @@
     password=$1$t7oyPBt7$NWbEo.XUV2gA9dUyDK4Dz1
     createhome=yes
     shell=/bin/bash
+- name: install curl
+  apt: name={{ item }}
+  with_items:
+    - curl
+- name: place the script for benchmark
+  copy:
+    src=home/isucon/benchmark.sh
+    dest=/home/isucon/benchmark.sh
+    owner=isucon
+    group=isucon
+    mode=755
